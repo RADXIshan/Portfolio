@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Cybero';
-    src: url('../fonts/cybero-font/CyberoPersonalUseOnlyReg-8OyR0.ttf') format('truetype');
+    src: url('./fonts/cybero-font/CyberoPersonalUseOnlyReg-8OyR0.ttf') format('truetype');
 }
 html {
     margin: 0;
@@ -9,7 +9,7 @@ html {
     background-image: 
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+        linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.02) 50%);
     background-size: 50px 50px, 50px 50px, 100px 100px;
     background-position: center center;
     background-attachment: fixed;
@@ -21,6 +21,7 @@ body {
     min-height: 100%;
     font-family: sans-serif;
     position: relative;
+    overflow-x: hidden;
 }
 
 body::before {
@@ -151,33 +152,36 @@ body::after {
         0 0 40px rgba(255, 255, 255, 0.05),
         inset 0 0 15px rgba(255, 255, 255, 0.1);
     border: 12px solid #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
+
 .iphone::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.1) 0%,
         rgba(255, 255, 255, 0.05) 50%,
         rgba(255, 255, 255, 0.1) 100%);
-    border-radius: 65px;
+    border-radius: 70px;
     pointer-events: none;
+    z-index: 1;
 }
 
 .screen {
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    margin: 2px;
-    border-radius: 67px;
+    flex: 1;
+    height: 100%;
+    border-radius: 58px;
     background: #000;
     position: relative;
     overflow: hidden;
     box-shadow: 
         inset 0 0 20px rgba(0, 0, 0, 0.8),
         inset 0 0 40px rgba(0, 0, 0, 0.6);
+    z-index: 2;
 }
 
 .dynamic-island {
@@ -304,13 +308,13 @@ body::after {
 }
 
 .greeting {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",sans-serif;
+    font-family: 'Cybero', sans-serif;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     color: white;
-    font-size: 3.5rem;
-    font-weight: 300;
+    font-size: 4.5rem;
+    font-weight: 400;
     opacity: 0;
     white-space: nowrap;
     text-shadow: 
