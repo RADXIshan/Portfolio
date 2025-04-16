@@ -1,0 +1,419 @@
+html {
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(-45deg, #001f3f, #dce5ec, #5e6366, #4998ac);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    background-attachment: fixed;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: sans-serif;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.7));
+    pointer-events: none;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.iphone-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    animation: header-image-animation linear forwards;
+    animation-timeline: view();
+    animation-range: exit;
+    transform-origin: top;
+}
+
+@keyframes header-image-animation {
+    25%{opacity: 1;}
+    85%,100%{opacity: 0; scale: 3;}
+}
+.iphone {
+    position: relative;
+    width: 380px;
+    height: 780px;
+    background: linear-gradient(145deg, #1a1a1a, #333333);
+    border-radius: 70px;
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.5),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+    border: 6px solid #111;
+}
+
+.iphone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%);
+    border-radius: 65px;
+    pointer-events: none;
+}
+
+.screen {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    margin: 2px;
+    border-radius: 67px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.dynamic-island {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 40px;
+    background: #000;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    z-index: 2;
+}
+
+.front-camera {
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(145deg, #1a1a1a, #333);
+    border-radius: 50%;
+    position: relative;
+}
+
+.front-camera::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    background: #666;
+    border-radius: 50%;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+.button {
+    position: absolute;
+    background: linear-gradient(145deg, #d1d1d1, #e2e2e2);
+    border-radius: 4px;
+    box-shadow: 
+      0 0 2px rgba(0, 0, 0, 0.2),
+      inset 0 0 1px rgba(255, 255, 255, 0.5);
+    z-index: 10;
+}
+
+.screen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #14141f 0%, #1c1c2e 100%);
+    opacity: 1;
+    z-index: 1;
+}
+
+.screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.action-button {
+    position: absolute;
+    left: -3px;
+    top: 180px;
+    width: 6px;
+    height: 45px;
+    background: linear-gradient(270deg, #222, #333);
+    border-radius: 4px;
+    box-shadow: 
+      0 0 4px rgba(0, 0, 0, 0.3),
+      inset 0 0 2px rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+@keyframes shine {
+    0% { box-shadow: 0 0 4px rgba(255, 255, 255, 0.4); }
+    100% { box-shadow: 0 0 12px rgba(255, 255, 255, 0.9); }
+}
+
+.bottom-indicator, .swipe-text {
+    opacity: 0;
+    animation: blink 2s ease-in-out infinite;
+}
+
+.bottom-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 6px;
+    background: #fff;
+    border-radius: 3px;
+    z-index: 4;
+}
+
+.swipe-text {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 5;
+}
+
+@keyframes blink {
+    0%, 100% { 
+      opacity: 0;
+    }
+    50% { 
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+}
+
+.greeting-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    height: 60px;
+}
+
+.greeting {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 300;
+    opacity: 0;
+    white-space: nowrap;
+    text-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.8),
+      0 0 25px rgba(255, 255, 255, 0.4),
+      0 0 35px rgba(255, 255, 255, 0.2);
+    display: flex;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.greeting span {
+    opacity: 0;
+    visibility: hidden;
+    animation: none;
+}
+
+.greeting.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.greeting.active span {
+    visibility: visible;
+    animation: letterAnimation 0.3s forwards;
+}
+
+/* Customize delay for each letter */
+.greeting.active span:nth-child(1) { animation-delay: 0s; }
+.greeting.active span:nth-child(2) { animation-delay: 0.1s; }
+.greeting.active span:nth-child(3) { animation-delay: 0.2s; }
+.greeting.active span:nth-child(4) { animation-delay: 0.3s; }
+.greeting.active span:nth-child(5) { animation-delay: 0.4s; }
+.greeting.active span:nth-child(6) { animation-delay: 0.5s; }
+.greeting.active span:nth-child(7) { animation-delay: 0.6s; }
+.greeting.active span:nth-child(8) { animation-delay: 0.7s; }
+.greeting.active span:nth-child(9) { animation-delay: 0.8s; }
+.greeting.active span:nth-child(10) { animation-delay: 0.9s; }
+
+@keyframes letterAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(10px) scale(0.9);
+      filter: blur(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+}
+
+.scroll-watcher{
+    height:5px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background: whitesmoke;
+    width: 100%;
+    scale: 0 1;
+    transform-origin: left;
+    animation: scroll-watcher linear;
+    animation-timeline: scroll();
+    border-radius: 10%;
+}
+
+@keyframes scroll-watcher{
+    to {scale: 1 1;}
+}
+
+.hero-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+    
+}
+
+#hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.floating-nav {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    animation: fadeInNav linear forwards;
+    animation-timeline: view();
+    animation-range: exit;
+}
+
+@keyframes fadeInNav {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.floating-nav.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.floating-nav a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.floating-nav a:hover {
+    color: #4998ac;
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.social-links a {
+    color: white;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+    color: #4998ac;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.location{
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
