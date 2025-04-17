@@ -53,38 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(hero);
 });
 
+// site-wide cursor
+const siteWide = document.querySelector('.custom-cursor.site-wide');
+
 document.addEventListener('DOMContentLoaded', () => {
-    const cursor = document.createElement('div');
-    cursor.classList.add('cursor');
-    document.body.appendChild(cursor);
+  // Show the cursor when mouse enters the document
+  document.addEventListener('mouseenter', (e) => {
+    siteWide.style.display = 'block';
+  });
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let cursorX = 0;
-    let cursorY = 0;
+  // Hide the cursor when mouse leaves the document
+  document.addEventListener('mouseleave', (e) => {
+    siteWide.style.display = 'none';
+  });
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+  // Track cursor movement
+  document.addEventListener('mousemove', TrackCursor);
 
-    function animateCursor() {
-        const dx = mouseX - cursorX;
-        const dy = mouseY - cursorY;
-        
-        cursorX += dx * 0.1;
-        cursorY += dy * 0.1;
-        
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        
-        requestAnimationFrame(animateCursor);
-    }
-
-    animateCursor();
+  // Add "active" class when mouse is pressed
+  document.addEventListener('mousedown', () => siteWide.classList.add('active'));
+  document.addEventListener('mouseup', () => siteWide.classList.remove('active'));
 });
 
-// Update cursor movement tracking for ripple effect
+function TrackCursor(e) {
+  const width = siteWide.clientWidth;
+  const height = siteWide.clientHeight;
+  siteWide.style.transform = `translate(${e.clientX - width / 2}px, ${e.clientY - height / 2}px)`;
+}
+
 document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth) * 100;
     const y = (e.clientY / window.innerHeight) * 100;

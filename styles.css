@@ -462,7 +462,7 @@ body::after {
 }
 
 .floating-nav a:hover {
-    color: #4998ac;
+    color: rgb(252, 255, 52);
 }
 
 .hero-content h1 {
@@ -477,7 +477,7 @@ body::after {
 
 .hero-content h1:hover {
     color: transparent;
-    -webkit-text-stroke: 2px #fff;
+    -webkit-text-stroke: 2px rgb(252, 255, 52);
     text-shadow: none;
 }
 
@@ -509,7 +509,7 @@ body::after {
 
 .hero-content p:hover {
     color: transparent;
-    -webkit-text-stroke: 1px #fff;
+    -webkit-text-stroke: 1px rgb(252, 255, 52);
     text-shadow: none;
 }
 
@@ -546,7 +546,7 @@ body::after {
 
 .social-links a:hover {
     transform: translateY(-5px);
-    color: #4998ac;
+    color: rgb(252, 255, 52);
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
 
@@ -557,49 +557,57 @@ body::after {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Cursor styles */
-.cursor {
-    position: fixed;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    background: transparent;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease;
-}
-
-.cursor-trail {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
-    pointer-events: none;
-    z-index: 9998;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-/* Hide default cursor everywhere */
+/* Ensure the default cursor is hidden */
 html, body, * {
     cursor: none !important;
 }
-
-/* Remove any cursor styles from all elements */
-a, button, .floating-nav a, input, textarea, select, i, .social-links a, .greeting, .preload-text, .swipe-text {
-    cursor: none !important;
-}
-
-/* Ensure no cursor styles are inherited */
-* {
-    cursor: none !important;
-}
-
-.ripple {
+/* Custom Cursor Styles */
+.custom-cursor {
     position: fixed;
-    width: 100px;
-    height: 100px;
+    top: 0;
+    left: 0;
+    width: 30px; /* Size of the cursor */
+    height: 30px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999; /* Ensure it's on top of other elements */
+    transform: translate(-50%, -50%); /* Ensure cursor is centered */
+  }
+  
+  .site-wide {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  .site-wide .pointer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    transition: width 0.1s ease-in-out, height 0.1s ease-in-out;
+  }
+  
+  .site-wide.active .pointer {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Optional: Customize links and buttons */
+  a:hover,
+  button:hover {
+    cursor: none;
+  }
+  
+  .ripple {
+    position: fixed;
+    width: 150px;
+    height: 150px;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
@@ -617,4 +625,3 @@ a, button, .floating-nav a, input, textarea, select, i, .social-links a, .greeti
         opacity: 0;
     }
 }
-
