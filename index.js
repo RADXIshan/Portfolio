@@ -34,7 +34,8 @@ function showNextGreeting() {
 greetings[currentIndex].classList.add('active');
 setInterval(showNextGreeting, displayDuration + transitionDuration);
 
-document.addEventListener('DOMContentLoaded', () => {
+
+function navbars() {
     const nav = document.querySelector('.floating-nav');
     const hero = document.getElementById('hero');
     
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     observer.observe(hero);
-});
+}
 
 // site-wide cursor
 const siteWide = document.querySelector('.custom-cursor.site-wide');
@@ -100,4 +101,4 @@ document.addEventListener('mousemove', (e) => {
         ripple.remove();
     }, 1000);
 }); 
-  
+
