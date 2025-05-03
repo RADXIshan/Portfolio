@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initWorkNumberAnimations();
         initParallaxImages();
         initTextSplitting();
-        initSectionTransitions(); // Add this new line
+        initSectionTransitions();
+        initSmoothNavigation(); // Add this new line
     }, 2000); // Wait for loader to finish
 });
 
@@ -800,6 +801,27 @@ window.addEventListener('resize', () => {
     }
 });
 
+// Add this new function to handle smooth navigation
+function initSmoothNavigation() {
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get the target section id from the href
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection && scroll) {
+                // Use Locomotive Scroll to smoothly scroll to the target
+                scroll.scrollTo(targetSection);
+            }
+        });
+    });
+}
+
 function initSectionTransitions() {
     // Get all sections
     const sections = document.querySelectorAll('section[data-scroll-section]');
@@ -1112,3 +1134,4 @@ function optimizeScrollAnimations() {
         }
     };
 }
+
