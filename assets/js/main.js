@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         initParallaxImages();
         initTextSplitting();
         initSectionTransitions();
-        initSmoothNavigation(); // Add this new line
+        initSmoothNavigation();
+        initAboutTextAnimation(); // Add this new line
+        initHoverAnimations(); // Keep this line
     }, 2000); // Wait for loader to finish
 });
 
@@ -522,22 +524,31 @@ function initCustomCursor() {
 function initMenuToggle() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    let overlay;
     
     menuToggle.addEventListener('click', () => {
         menuToggle.classList.toggle('active');
         
         if (menuToggle.classList.contains('active')) {
-            // Create a full-screen overlay for the menu
-            const overlay = document.createElement('div');
-            overlay.classList.add('menu-overlay');
-            document.body.appendChild(overlay);
+            // Create overlay if it doesn't exist
+            if (!document.querySelector('.menu-overlay')) {
+                overlay = document.createElement('div');
+                overlay.classList.add('menu-overlay');
+                document.body.appendChild(overlay);
+            } else {
+                overlay = document.querySelector('.menu-overlay');
+            }
             
-            gsap.to(overlay, {
-                opacity: 1,
-                duration: 0.5,
-                ease: 'power2.inOut'
-            });
+            // Add active class to overlay
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 10);
             
+            // Add mobile-active class to nav-links
+            navLinks.classList.add('mobile-active');
+            navLinks.style.display = 'flex';
+            
+            // Animate hamburger icon
             gsap.to('.bar:first-child', {
                 rotate: 45,
                 y: 8,
@@ -560,34 +571,35 @@ function initMenuToggle() {
                 ease: 'power2.inOut'
             });
             
+            // Animate nav links
+            const navItems = document.querySelectorAll('.nav-links li');
             gsap.to(navLinks, {
-                display: 'flex',
                 opacity: 1,
-                duration: 0.6,
+                duration: 0.5,
                 ease: 'power3.out'
             });
             
-            // Animate each nav link with stagger
-            gsap.from('.nav-links li', {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
+            gsap.to(navItems, {
+                opacity: 1,
+                y: 0,
                 stagger: 0.1,
+                duration: 0.8,
                 delay: 0.3,
                 ease: 'power3.out'
             });
+            
+            // Disable body scroll
+            document.body.style.overflow = 'hidden';
         } else {
-            const overlay = document.querySelector('.menu-overlay');
+            // Get overlay
+            overlay = document.querySelector('.menu-overlay');
             
-            gsap.to(overlay, {
-                opacity: 0,
-                duration: 0.5,
-                ease: 'power2.inOut',
-                onComplete: () => {
-                    overlay.remove();
-                }
-            });
+            // Remove active class from overlay
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
             
+            // Animate hamburger icon back
             gsap.to('.bar:first-child', {
                 rotate: 0,
                 y: 0,
@@ -610,14 +622,35 @@ function initMenuToggle() {
                 ease: 'power2.inOut'
             });
             
+            // Animate nav links out
+            const navItems = document.querySelectorAll('.nav-links li');
+            gsap.to(navItems, {
+                opacity: 0,
+                y: 20,
+                stagger: 0.05,
+                duration: 0.5,
+                ease: 'power3.in'
+            });
+            
             gsap.to(navLinks, {
                 opacity: 0,
-                duration: 0.6,
-                ease: 'power3.out',
+                duration: 0.5,
+                ease: 'power3.in',
                 onComplete: () => {
+                    navLinks.classList.remove('mobile-active');
                     navLinks.style.display = 'none';
+                    
+                    // Remove overlay after animation
+                    if (overlay) {
+                        setTimeout(() => {
+                            overlay.remove();
+                        }, 500);
+                    }
                 }
             });
+            
+            // Re-enable body scroll
+            document.body.style.overflow = '';
         }
     });
     
@@ -800,6 +833,219 @@ window.addEventListener('resize', () => {
         scroll.update();
     }
 });
+
+function initHoverAnimations() {
+  // 1. Skill items hover effect with 3D rotation
+  const skillItems = document.querySelectorAll('.skill-item');
+  
+  skillItems.forEach(item => {
+    item.addEventListener('mouseenter', (e) => {
+      const rect = item.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const rotateX = (mouseY - rect.height / 2) / 10;
+      const rotateY = (rect.width / 2 - mouseX) / 10;
+      
+      gsap.to(item, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        scale: 1.05,
+        boxShadow: '0 10px 30px rgba(252, 180, 137, 0.2)',
+        duration: 0.4,
+        ease: 'power2.out',
+        transformPerspective: 800
+      });
+    });
+    
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const rotateX = (mouseY - rect.height / 2) / 10;
+      const rotateY = (rect.width / 2 - mouseX) / 10;
+      
+      gsap.to(item, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        duration: 0.2,
+        ease: 'power2.out'
+      });
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      gsap.to(item, {
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+        boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
+        duration: 0.6,
+        ease: 'power3.out'
+      });
+    });
+  });
+  
+  // 2. Project items hover effect
+  const projectItems = document.querySelectorAll('.project-item');
+  
+  projectItems.forEach(item => {
+    const projectImage = item.querySelector('.project-image');
+    const projectOverlay = item.querySelector('.project-overlay');
+    const projectNumber = item.querySelector('.project-number');
+    
+    item.addEventListener('mouseenter', () => {
+      gsap.to(projectImage, {
+        scale: 1.1,
+        duration: 0.7,
+        ease: 'power2.out'
+      });
+      
+      gsap.to(projectOverlay, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+      
+      gsap.to(projectNumber, {
+        y: -10,
+        scale: 1.2,
+        color: 'var(--accent-color)',
+        textShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+        duration: 0.4,
+        ease: 'back.out(1.7)'
+      });
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      gsap.to(projectImage, {
+        scale: 1,
+        duration: 0.7,
+        ease: 'power2.inOut'
+      });
+      
+      gsap.to(projectOverlay, {
+        opacity: 0,
+        y: '20%',
+        duration: 0.5,
+        ease: 'power3.inOut'
+      });
+      
+      gsap.to(projectNumber, {
+        y: 0,
+        scale: 1,
+        color: 'var(--accent-color)',
+        textShadow: 'none',
+        duration: 0.4,
+        ease: 'power2.inOut'
+      });
+    });
+  });
+  
+  // 3. Paragraph text hover effect
+  const paragraphs = document.querySelectorAll('.subtitle');
+  
+  paragraphs.forEach(paragraph => {
+    paragraph.addEventListener('mouseenter', () => {
+      gsap.to(paragraph, {
+        color: '#ffffff',
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    });
+    
+    paragraph.addEventListener('mouseleave', () => {
+      gsap.to(paragraph, {
+        color: 'var(--text-color-muted)',
+        duration: 0.5,
+        ease: 'power2.inOut'
+      });
+    });
+  });
+  
+  // 4. Social links hover effect
+  const socialLinks = document.querySelectorAll('.social-link');
+  
+  socialLinks.forEach(link => {
+    const icon = link.querySelector('i');
+    
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, {
+        backgroundColor: 'var(--accent-color)',
+        y: -5,
+        duration: 0.3,
+        ease: 'back.out(1.7)'
+      });
+      
+      gsap.to(icon, {
+        color: 'var(--primary-color)',
+        scale: 1.2,
+        rotation: 360,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, {
+        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+      
+      gsap.to(icon, {
+        color: 'var(--text-color)',
+        scale: 1,
+        rotation: 0,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      });
+    });
+  });
+  
+  // 5. New Submit button hover effect with pulse animation
+  const submitBtn = document.querySelector('.submit-btn');
+  
+  if (submitBtn) {
+    submitBtn.addEventListener('mouseenter', () => {
+      // Create a pulsing glow effect
+      gsap.to(submitBtn, {
+        boxShadow: '0 0 20px var(--accent-color)',
+        backgroundColor: 'var(--accent-color)',
+        color: 'var(--primary-color)',
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+      
+      // Create a pulse animation
+      const pulseTimeline = gsap.timeline({repeat: -1, yoyo: true});
+      pulseTimeline.to(submitBtn, {
+        boxShadow: '0 0 30px var(--accent-color)',
+        duration: 0.8,
+        ease: 'power1.inOut'
+      });
+      
+      // Store the timeline on the button element to stop it later
+      submitBtn._pulseTimeline = pulseTimeline;
+    });
+    
+    submitBtn.addEventListener('mouseleave', () => {
+      // Stop the pulse animation
+      if (submitBtn._pulseTimeline) {
+        submitBtn._pulseTimeline.kill();
+        submitBtn._pulseTimeline = null;
+      }
+      
+      gsap.to(submitBtn, {
+        boxShadow: 'none',
+        backgroundColor: 'transparent',
+        color: 'var(--text-color)',
+        duration: 0.5,
+        ease: 'power2.inOut'
+      });
+    });
+  }
+}
 
 // Add this new function to handle smooth navigation
 function initSmoothNavigation() {
@@ -1134,4 +1380,64 @@ function optimizeScrollAnimations() {
         }
     };
 }
-
+function initAboutTextAnimation() {
+    // Get the paragraphs in the about section
+    const aboutParagraphs = document.querySelectorAll('.about-text p');
+    
+    // Process each paragraph
+    aboutParagraphs.forEach(paragraph => {
+        // Get the text content
+        const text = paragraph.textContent;
+        // Split the text into individual characters with spans
+        let newHTML = '';
+        
+        // Create a span for each character
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === ' ') {
+                newHTML += ' ';
+            } else {
+                newHTML += `<span class="char">${text[i]}</span>`;
+            }
+        }
+        
+        // Replace the paragraph content with the spans
+        paragraph.innerHTML = newHTML;
+        
+        // Create a scroll trigger for this paragraph
+        ScrollTrigger.create({
+            trigger: paragraph,
+            scroller: '[data-scroll-container]',
+            start: 'top 80%', // Start when the top of the paragraph is 80% from the top of the viewport
+            end: 'bottom 20%', // End when the bottom of the paragraph is 20% from the top of the viewport
+            onUpdate: (self) => {
+                // Get all character spans in this paragraph
+                const chars = paragraph.querySelectorAll('.char');
+                
+                // Calculate how many characters to highlight based on scroll progress
+                const totalChars = chars.length;
+                const charsToHighlight = Math.floor(self.progress * totalChars);
+                
+                // Apply highlighting to characters
+                chars.forEach((char, index) => {
+                    if (index < charsToHighlight) {
+                        // Highlight this character
+                        gsap.to(char, {
+                            color: 'var(--accent-color)',
+                            fontWeight: '600',
+                            duration: 0.2,
+                            ease: 'power1.out'
+                        });
+                    } else {
+                        // Reset this character
+                        gsap.to(char, {
+                            color: 'var(--text-color-muted)',
+                            fontWeight: '400',
+                            duration: 0.2,
+                            ease: 'power1.out'
+                        });
+                    }
+                });
+            }
+        });
+    });
+}

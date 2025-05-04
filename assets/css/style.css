@@ -198,7 +198,87 @@ nav {
     background-color: var(--text-color);
     transition: var(--transition);
 }
+/* Add these styles to your style.css file */
 
+/* Menu Overlay Styling */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 10, 10, 0.95);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  
+  .menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Mobile Navigation Styling */
+  .nav-links.mobile-active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    gap: 3rem;
+    padding: 2rem;
+  }
+  
+  .nav-links.mobile-active li {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .nav-links.mobile-active a {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--text-color);
+    font-family: var(--font-secondary);
+  }
+  
+  .nav-links.mobile-active a::after {
+    height: 2px;
+  }
+  
+  /* Hamburger Menu Animation */
+  .menu-toggle.active .bar:first-child {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--accent-color);
+  }
+  
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle.active .bar:last-child {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--accent-color);
+  }
+  
+  /* Ensure menu toggle is visible on mobile */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: flex;
+      z-index: 101;
+    }
+    
+    .nav-links {
+      display: none;
+    }
+  }
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -426,19 +506,6 @@ textarea {
 input:focus, textarea:focus {
     outline: none;
     border-bottom-color: var(--accent-color); /* Change border color on focus */
-}
-
-.submit-btn {
-    padding: 1.5rem 3rem;
-    background-color: transparent;
-    border: 1px solid var(--accent-color);
-    color: var(--text-color);
-    font-size: 1.6rem;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--transition);
 }
 
 /* Responsive styles for contact section */
@@ -1243,3 +1310,88 @@ footer {
         height: 10vw;
     }
 }
+/* Add these responsive improvements to your style.css file */
+
+/* Improved responsive styles */
+@media (max-width: 768px) {
+    /* Adjust hero section for mobile */
+    .title {
+      font-size: 5.5rem;
+      text-align: center;
+    }
+    
+    .subtitle {
+      text-align: center;
+      margin: 0 auto 4rem;
+    }
+    
+    .hero-social-links {
+      justify-content: center;
+    }
+    
+    /* Adjust about section for mobile */
+    .about-header {
+      flex-direction: column;
+    }
+    
+    .header-content,
+    .about-image {
+      flex: 0 0 100%;
+      margin-bottom: 3rem;
+    }
+    
+    .about-image {
+      max-width: 250px;
+      margin: 0 auto 3rem;
+    }
+    
+    /* Adjust skills grid for mobile */
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    
+    /* Adjust projects grid for mobile */
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .project-item {
+      height: 30rem;
+    }
+    
+    /* Adjust contact section for mobile */
+    .contact-content {
+      flex-direction: column;
+    }
+    
+    .contact-info,
+    .contact-form {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 4rem;
+    }
+  }
+  
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    .title {
+      font-size: 4.2rem;
+    }
+    
+    .section-title {
+      font-size: 3.2rem;
+    }
+    
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .about, .tech-stack, .projects, .contact {
+      padding: 10rem 0 5rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+  }
