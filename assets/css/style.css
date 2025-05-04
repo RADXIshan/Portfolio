@@ -962,19 +962,19 @@ footer {
 }
 
 .project-image-1 {
-    background: url('https://images.unsplash.com/photo-1706201002291-b3d5c5a9f1b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+    background: url('../images/stock1.jpg') center/cover;
 }
 
 .project-image-2 {
-    background: url('https://images.unsplash.com/photo-1682687220063-4742bd7fd538?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+    background: url('../images/stock2.jpg') center/cover;
 }
 
 .project-image-3 {
-    background: url('https://images.unsplash.com/photo-1682687220208-22d7a2543e88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+    background: url('../images/stock3.jpg') center/cover;
 }
 
 .project-image-4 {
-    background: url('https://images.unsplash.com/photo-1682687220923-c58b9a4592ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+    background: url('../images/stock4.jpg') center/cover;
 }
 
 /* Add this for the fifth project */
