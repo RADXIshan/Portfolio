@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000); // Wait for loader to finish
 });
 gsap.registerPlugin(ScrollTrigger);
-
 // Loader animation
 function initLoader() {
     const tl = gsap.timeline();
